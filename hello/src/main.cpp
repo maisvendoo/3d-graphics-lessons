@@ -54,6 +54,7 @@ void main()
 //------------------------------------------------------------------------------
 int main()
 {
+    // Функция обратного вызова для обработки ошибок GLFW
     glfwSetErrorCallback(
         [](int error, const char *description)
         {
@@ -61,15 +62,19 @@ int main()
                       << error << " "
                       << description << std::endl;
         }
-                );
+    );
 
+    // Инициализация GLFW
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
+    // Сообщаем GLFW версию OpenGL и используемый профиль
+    // (OpenGL 4.6 Core Profile)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    // Создаем окно приложения
     GLFWwindow *window = glfwCreateWindow(1280,
                                           720,
                                           "Simple example",
@@ -82,9 +87,13 @@ int main()
         exit(EXIT_FAILURE);
     }
 
+    // Задаем callback-функцию для обработки нажатия клавиш
     glfwSetKeyCallback(window,
        [](GLFWwindow * window, int key, int scancode, int action, int mods)
        {
+           (void) scancode;
+           (void) mods;
+
            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
            {
                glfwSetWindowShouldClose(window, GLFW_TRUE);
